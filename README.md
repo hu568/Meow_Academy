@@ -206,6 +206,92 @@ opencode chat
 | `.opencode/tools/*.js` | 数据库工具和同步脚本 |
 | `.opencode/mcp.json` | MCP 工具权限配置（可选） |
 
+### 图像理解功能配置（重要）
+
+为了让 Agent 能够读取和分析图片（如题目截图、教材扫描件），需要在 `opencode.json` 中为模型开启多模态能力：
+
+**全局配置**（`~/.opencode/opencode.json`）：
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "your-provider": {
+      "options": {
+        "apiKey": "{env:YOUR_API_KEY}"
+      },
+      "models": {
+        "your-model-name": {
+          "name": "Your Vision Model",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**关键配置项**：
+
+| 字段 | 说明 |
+|------|------|
+| `modalities.input` | 模型支持的输入类型，必须包含 `"image"` |
+| `modalities.output` | 模型支持的输出类型，通常为 `"text"` |
+
+**示例：Anthropic Claude（支持视觉）**
+
+```json
+{
+  "provider": {
+    "anthropic": {
+      "options": {
+        "apiKey": "{env:ANTHROPIC_API_KEY}"
+      },
+      "models": {
+        "claude-sonnet-4-5-20250929": {
+          "name": "Claude Sonnet 4.5",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**示例：OpenAI GPT-4o（支持视觉）**
+
+```json
+{
+  "provider": {
+    "openai": {
+      "options": {
+        "apiKey": "{env:OPENAI_API_KEY}"
+      },
+      "models": {
+        "gpt-4o": {
+          "name": "GPT-4o",
+          "modalities": {
+            "input": ["text", "image"],
+            "output": ["text"]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+> ⚠️ **注意**：
+> 1. 不是所有模型都支持图像输入，请确认你使用的模型具备视觉能力
+> 2. 配置中的 `modalities` 字段必须放在具体模型配置下，而不是 provider 级别
+> 3. 图片引用方式：在对话中使用 `@path/to/image.png` 引用图片文件
+
 ### 环境变量（可选）
 
 创建 `.env` 文件：
