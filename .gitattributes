@@ -1,2 +1,15 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Ignore Sisyphus plans directory
+.sisyphus/ export-ignore
+
+# Ignore OpenCode node_modules and lockfiles
+.opencode/node_modules/ export-ignore
+.opencode/package.json export-ignore
+.opencode/package-lock.json export-ignore
+.opencode/bun.lock export-ignore
+.opencode/.gitignore export-ignore
+
+# Ignore OpenCode memory (if sensitive)
+.opencode/memory/ export-ignore
