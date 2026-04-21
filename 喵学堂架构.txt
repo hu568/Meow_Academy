@@ -70,3 +70,22 @@
     └── 3.4 配置文件/
         └── 学习者主档.md
             (关联：user_id ↔ 画像 + 档案路径)
+│
+└── 🗄️ 4. 数据层 (Data Layer)        ← ✨ 新增！SQLite + Markdown 双存储
+    ├── 4.1 SQLite数据库/
+    │   └── 喵学堂.db               ← 唯一数据源，AI直接操作
+    │       ├── subjects            ← 学科表
+    │       ├── materials           ← 资料/书籍表
+    │       ├── knowledge_cards     ← 知识点卡片表
+    │       ├── terms               ← 专业词典表
+    │       └── archive_logs        ← 归档记录表
+    │
+    ├── 4.2 Markdown视图/
+    │   └── 索引/图书总录.md         ← 只读视图，人类可读
+    │       ⚠️ 禁止手动编辑，由数据库自动生成
+    │
+    └── 4.3 同步工具/
+        └── .opencode/tools/
+            ├── database.js          ← 数据库核心类
+            ├── sync-manager.js      ← 同步管理器
+            └── init-db.js           ← 初始化脚本
