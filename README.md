@@ -137,6 +137,159 @@ AI/程序操作 → 写入 SQLite → 自动生成 Markdown
 
 ---
 
+## 🚀 快速开始
+
+### 环境要求
+
+- **Node.js** >= 18.0.0
+- **OpenCode CLI** >= 0.3.0（AI Agent 运行时）
+- **Git**（用于克隆仓库）
+
+### 安装步骤
+
+#### 1. 克隆仓库
+
+```bash
+git clone https://github.com/your-username/meow-academy.git
+cd meow-academy
+```
+
+#### 2. 安装依赖
+
+```bash
+npm install
+```
+
+> 仅安装 `@libsql/client` 一个运行时依赖，用于数据库操作。
+
+#### 3. 配置 OpenCode
+
+确保已安装 OpenCode CLI：
+
+```bash
+npm install -g @opencode-ai/cli
+```
+
+验证安装：
+
+```bash
+opencode --version
+```
+
+#### 4. 初始化数据库
+
+```bash
+node .opencode/tools/init-db.js
+```
+
+> 这将创建 `喵学堂.db` SQLite 数据库并初始化表结构。
+
+#### 5. 启动系统
+
+```bash
+opencode chat
+```
+
+然后与 **西西喵斯** 对话即可开始学习！
+
+---
+
+## ⚙️ 配置说明
+
+### OpenCode 配置
+
+配置文件位于 `.opencode/` 目录：
+
+| 文件 | 用途 |
+|------|------|
+| `.opencode/agents/*.md` | Agent 角色定义（YAML Frontmatter + Markdown） |
+| `.opencode/tools/*.js` | 数据库工具和同步脚本 |
+| `.opencode/mcp.json` | MCP 工具权限配置（可选） |
+
+### 环境变量（可选）
+
+创建 `.env` 文件：
+
+```env
+# 数据库路径（默认：./喵学堂.db）
+DB_PATH=./喵学堂.db
+
+# 学科配置（可选，默认启用所有）
+ENABLED_SUBJECTS=数学,物理,英语
+```
+
+### 自定义 Agent
+
+编辑 `.opencode/agents/` 下的 Markdown 文件即可调整 Agent 行为：
+
+- `西西喵斯.md` - 主调度员（一般无需修改）
+- `帕秋莉.md` - 调整资料处理风格
+- `月咏小萌.md` - 调整教学风格
+- `茅场晶彦.md` - 调整出题风格
+
+---
+
+## 📖 使用指南
+
+### 首次使用
+
+1. **初始化学科**：告诉西西喵斯 "创建数学学科"
+2. **导入资料**：上传 PDF/图片，说 "帮我整理这本教材"
+3. **开始学习**："我想学习导数"
+
+### 常用指令
+
+| 需求 | 示例指令 |
+|------|----------|
+| 导入资料 | "整理这份《高等数学》PDF" |
+| 知识讲解 | "讲解二极管的伏安特性" |
+| 生成练习 | "给我出5道向量题" |
+| 错题复习 | "我想复习昨天的错题" |
+| 查看进度 | "我的学习进度如何" |
+
+### 数据管理
+
+- **数据库文件**：`喵学堂.db`（SQLite，可直接用 DB Browser 打开）
+- **知识库目录**：`知识层/结构化知识库/`
+- **索引视图**：`索引/图书总录.md`（只读，自动生成）
+
+---
+
+## 🛠️ 故障排除
+
+### 常见问题
+
+**Q: OpenCode 命令找不到？**
+```bash
+# 检查全局安装
+npm list -g @opencode-ai/cli
+
+# 或使用 npx
+npx @opencode-ai/cli chat
+```
+
+**Q: 数据库初始化失败？**
+```bash
+# 检查 Node.js 版本
+node --version  # 需要 >= 18
+
+# 手动初始化
+node .opencode/tools/init-db.js --force
+```
+
+**Q: Agent 无法调用？**
+- 检查 `.opencode/agents/` 目录是否存在
+- 确认文件格式：YAML Frontmatter + Markdown 正文
+- 查看 OpenCode 日志获取详细错误
+
+**Q: 中文路径问题（Windows）？**
+```bash
+# 使用 PowerShell 时确保 UTF-8 编码
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+```
+
+---
+
 ## 📜 许可
 
 本项目为个人学习系统，仅供学习研究使用。
